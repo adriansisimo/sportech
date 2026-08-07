@@ -1,4 +1,4 @@
-# center PROYECTO FINAL JOVENES CREATIVOS
-## SporTech
-### Adrián A. Cardona B.
-#### 2026
+# <center> PROYECTO FINAL JOVENES CREATIVOS</center>
+## <center>SporTech</center>
+### <center>Adrián A. Cardona B.</center> 
+#### <center>2026</center>
