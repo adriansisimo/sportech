@@ -181,3 +181,61 @@ main {
   max-width: 320px;
   backdrop-filter: blur(4px);       /* efecto vidrio esmerilado detrás del texto */
 }
+
+/* ===== SERVICIOS ===== */
+#servicios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+#servicios h2 {
+  color: var(--color-primary-light);
+  border-radius: 50px;
+  font-size: 1.5rem;
+}
+
+#servicios span {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  max-width: 320px;
+  text-align: center;
+}	
+
+/* ===== TARJETAS DE SERVICIOS ===== */
+.tarjetas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem 2rem;
+}
+
+.tarjetas article {
+  padding: 1rem 1rem;
+  border: solid 1px var(--color-border);
+  border-radius: 20px;
+}
+
+.tarjetas article h3 {
+  text-align: center;
+  color: var(--color-secondary);
+  padding-bottom: 0.90rem;
+  font-size: 1.2rem;
+}
+
+.tarjetas article p {
+  max-width: 320px;
+  padding-bottom: 1rem;
+}
+
+.tarjetas article img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+}
