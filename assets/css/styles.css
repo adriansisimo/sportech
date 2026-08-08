@@ -96,23 +96,88 @@ header h2 {
 /* ===== MAIN INICIO ===== */
 main {
   background-color: var(--color-bg);
-  padding: 3rem 3rem;
+  padding: 1.5rem 3rem;
+}
+
+#inicio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+}
+
+.texto-inicio {
+  text-align: left;
+  width: 30rem;
+  flex-shrink: 0;
+}
+
+.texto-inicio span {
+  color: var(--color-accent);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.texto-inicio h2 i {
+  color: var(--color-accent);
+}
+
+.texto-inicio p{
+  padding-top: 1rem;
+}
+
+.botones-inicio{
+  padding-top: 2rem;
+  display: flex;
+  gap: 4.5rem;
+}
+
+.botones-inicio a{
+  background-color: var(--color-accent);
+  color: var(--color-text-inverse);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.botones-inicio a:hover{
+  background-color: var(--color-accent-light);
+  color: var(--color-text-inverse);
+}
+
+/* ===== IMAGEN + TEXTO DE INICIO ===== */
+.imagen-inicio {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1;
+  position: relative;      /* nuevo: convierte esto en el punto de referencia */
 }
 
-main #inicio{
-    text-align: left;
-    margin-bottom: 2rem;
-    width: 30rem;
+.imagen-inicio img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  mask-image: linear-gradient(to right, transparent 0%, black 15%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%);
 }
 
-main #inicio span{
-    color: var(--color-accent);
-    font-size: 0.95rem;
-    margin-bottom: 1rem;
-}
-
-#inicio h2 i{
-  color: var(--color-accent);
+.imagen-inicio span {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  color: var(--color-text-inverse);
+  background-color: rgba(15, 76, 92, 0.75);  /* azul petróleo semi-transparente */
+  font-size: 1.rem;
+  font-weight: 600;
+  text-align: right;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  max-width: 320px;
+  backdrop-filter: blur(4px);       /* efecto vidrio esmerilado detrás del texto */
 }
