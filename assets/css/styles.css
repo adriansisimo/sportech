@@ -189,6 +189,7 @@ main {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  padding-top: 5rem;
   padding-bottom: 1rem;
 }
 
@@ -238,4 +239,166 @@ main {
   justify-content: center;
   width: 90px;
   height: 90px;
+}
+
+/* ===== NUESTRO PROCESO ===== */
+#proceso {
+  background-color: var(--color-bg);
+  padding: 4rem 3rem;
+  text-align: center;
+}
+
+.etiqueta-proceso {
+  display: block;
+  color: var(--color-secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+#proceso h2 {
+  color: var(--color-text);
+  font-size: 1.8rem;
+  margin-bottom: 3rem;
+}
+
+/* ===== CONTENEDOR DE LOS 5 PASOS ===== */
+.pasos-proceso {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Línea conectora*/
+.pasos-proceso::before {
+  content: "";
+  position: absolute;
+  top: 32px;
+  left: 60px;
+  right: 60px;
+  height: 2px;
+  background-color: var(--color-secondary);
+  z-index: 1;
+}
+
+/* ===== CADA PASO ===== */
+.paso {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  width: 180px;
+}
+
+.icono-paso {
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-inverse);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  transition: background-color 0.2s ease;
+}
+
+.icono-paso svg {
+  width: 26px;
+  height: 26px;
+}
+
+.paso:hover .icono-paso {
+  background-color: var(--color-accent);
+}
+
+.paso h3 {
+  color: var(--color-text);
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.paso p {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* ===== NOSOTROS ===== */
+#nosotros {
+  padding-top: 2rem;
+  padding-bottom: 0;
+  padding-left: 2rem;
+  text-align: left;
+}
+
+#nosotros h2 {
+  color: var(--color-text);
+  font-size: 1.8rem;
+  padding-top: 1.5rem;
+  margin-bottom: 1rem;
+  max-width: 320px;
+}
+
+#nosotros #text-nosotros {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  max-width: 650px;      /* antes: 320px */
+}
+
+
+
+/* ===== MINI TARJETAS ===== */
+.mini-tarjetas {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: nowrap;      /* antes: wrap */
+  gap: 1.5rem;
+  padding: 2rem 2rem 2rem 2rem;
+  max-width: 650px;
+}
+
+.tarjetas {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 0.75rem;
+  flex: 1;                /* nuevo: reparte el espacio equitativamente entre las 3 */
+  min-width: 0;           /* nuevo: permite que el texto de adentro se encoja/wrappee */
+}
+
+.tarjetas svg,
+.tarjetas a svg {
+  width: 26px;
+  height: 26px;
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+.info-tarjeta {
+  min-width: 0;           /* nuevo: mismo motivo */
+}
+
+.info-tarjeta p {
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.info-tarjeta span {
+  color: var(--color-text-light);
+  font-size: 0.85rem;
 }
