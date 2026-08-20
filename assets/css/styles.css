@@ -93,11 +93,27 @@ header h2 {
   text-decoration-line: underline var(--color-accent-light);
 }
 
+/* ===== RELOAD ===== */
+.preLoader{
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+}
+
+.logo {
+  font-size: 4rem;
+  font-weight: 600;
+  perspective: 800px;
+}
+
 /* ===== MAIN INICIO ===== */
 main {
   background-color: var(--color-bg);
   padding: 1.5rem 3rem;
   border-bottom: solid 2px var(--color-border);
+  opacity: 0;
 }
 
 #inicio {
@@ -149,7 +165,7 @@ main {
   color: var(--color-text-inverse);
 }
 
-/* ===== IMAGEN + TEXTO DE INICIO ===== */
+/* ===== IMAGEN + TEXTE INICIO ===== */
 .imagen-inicio {
   display: flex;
   flex-direction: column;
