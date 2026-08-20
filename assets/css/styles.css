@@ -31,6 +31,29 @@
   box-sizing: border-box;
 }
 
+body {
+  overflow: hidden;
+}
+
+/* ===== RELOAD ===== */
+.preLoader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: var(--color-bg-dark);
+  display: grid;
+  place-items: center;
+  visibility: hidden;
+}
+
+.Logo {
+  font-size: 4rem;
+  font-weight: 600;
+  perspective: 800px;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
 /* ===== HEADER ===== */
 header {
   background-color: var(--color-bg-dark);
@@ -91,21 +114,6 @@ header h2 {
   background-color: var(--color-accent-light);
   color: var(--color-text-inverse);
   text-decoration-line: underline var(--color-accent-light);
-}
-
-/* ===== RELOAD ===== */
-.preLoader{
-  position: fixed;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  visibility: hidden;
-}
-
-.logo {
-  font-size: 4rem;
-  font-weight: 600;
-  perspective: 800px;
 }
 
 /* ===== MAIN INICIO ===== */
