@@ -1,28 +1,40 @@
 :root {
   /* Color principal - identidad de marca */
-  --color-primary: #0F4C5C;        /* Azul petróleo profundo - tecnología y confianza */
-  --color-primary-light: #1A6B7D;  /* Variante más clara para hovers */
+  --color-primary: #0F4C5C;
+  /* Azul petróleo profundo - tecnología y confianza */
+  --color-primary-light: #1A6B7D;
+  /* Variante más clara para hovers */
 
   /* Color de acento - energía deportiva */
-  --color-accent: #FF6B35;         /* Naranja vibrante - energía, CTAs, botones */
-  --color-accent-light: #FF8C5A;   /* Variante clara para hover en botones */
+  --color-accent: #FF6B35;
+  /* Naranja vibrante - energía, CTAs, botones */
+  --color-accent-light: #FF8C5A;
+  /* Variante clara para hover en botones */
 
   /* Color secundario - salud y bienestar */
-  --color-secondary: #6BBF59;      /* Verde fresco - vida saludable */
+  --color-secondary: #6BBF59;
+  /* Verde fresco - vida saludable */
   --color-secondary-light: #8FD87F;
 
   /* Fondos */
-  --color-bg: #FFFFFF;             /* Fondo principal (secciones claras) */
-  --color-bg-alt: #F4F7F8;         /* Fondo alterno (tarjetas, secciones intercaladas) */
-  --color-bg-dark: #0A2E38;        /* Fondo oscuro (header/footer) */
+  --color-bg: #FFFFFF;
+  /* Fondo principal (secciones claras) */
+  --color-bg-alt: #F4F7F8;
+  /* Fondo alterno (tarjetas, secciones intercaladas) */
+  --color-bg-dark: #0A2E38;
+  /* Fondo oscuro (header/footer) */
 
   /* Textos */
-  --color-text: #1C1C1C;           /* Texto principal sobre fondo claro */
-  --color-text-light: #6E7B7D;     /* Texto secundario/spans descriptivos */
-  --color-text-inverse: #FFFFFF;   /* Texto sobre fondos oscuros */
+  --color-text: #1C1C1C;
+  /* Texto principal sobre fondo claro */
+  --color-text-light: #6E7B7D;
+  /* Texto secundario/spans descriptivos */
+  --color-text-inverse: #FFFFFF;
+  /* Texto sobre fondos oscuros */
 
   /* Bordes y detalles */
-  --color-border: #E0E6E7;         /* Bordes sutiles en tarjetas */
+  --color-border: #E0E6E7;
+  /* Bordes sutiles en tarjetas */
 }
 
 * {
@@ -66,7 +78,7 @@ header {
   padding: 1rem 3rem;
   position: sticky;
   top: 0;
-  z-index: 100;  
+  z-index: 100;
 }
 
 /* ===== LOGO ===== */
@@ -76,7 +88,7 @@ header h2 {
   margin: 0;
 }
 
-.titulo-tech{
+.titulo-tech {
   color: var(--color-accent);
 }
 
@@ -90,19 +102,47 @@ header h2 {
   padding: 0;
 }
 
-.navegacion a{
+.navegacion a {
   color: var(--color-text-inverse);
   font-size: 0.95rem;
   text-decoration: none;
-  transition: color  0.2s ease;
+  transition: color 0.2s ease;
 }
 
-.navegacion a:hover{
+.navegacion a:hover {
   color: var(--color-accent-light);
 }
 
+.hamburguesa {
+  display: none;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.hamburguesa-bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-text-inverse);
+  margin: 5px auto;
+  transition: .3s ease;
+}
+
+/* Animación */
+.hamburguesa.active .hamburguesa-bar:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburguesa.active .hamburguesa-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburguesa.active .hamburguesa-bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
 /* ===== BOTON ASESORIA ===== */
-.navegacion a#btn-asesoria{
+.navegacion a#btn-asesoria {
   background-color: var(--color-accent);
   color: var(--color-text-inverse);
   padding: 0.5rem 1rem;
@@ -111,7 +151,7 @@ header h2 {
   transition: background-color 0.2s ease;
 }
 
-.navegacion a#btn-asesoria:hover{
+.navegacion a#btn-asesoria:hover {
   background-color: var(--color-accent-light);
   color: var(--color-text-inverse);
   text-decoration-line: underline var(--color-accent-light);
@@ -149,17 +189,17 @@ main {
   color: var(--color-accent);
 }
 
-.texto-inicio p{
+.texto-inicio p {
   padding-top: 1rem;
 }
 
-.botones-inicio{
+.botones-inicio {
   padding-top: 2rem;
   display: flex;
   gap: 4.5rem;
 }
 
-.botones-inicio a{
+.botones-inicio a {
   background-color: var(--color-accent);
   color: var(--color-text-inverse);
   padding: 0.5rem 1rem;
@@ -169,7 +209,7 @@ main {
   text-decoration: none;
 }
 
-.botones-inicio a:hover{
+.botones-inicio a:hover {
   background-color: var(--color-accent-light);
   color: var(--color-text-inverse);
 }
@@ -198,14 +238,16 @@ main {
   bottom: 1.5rem;
   right: 1.5rem;
   color: var(--color-text-inverse);
-  background-color: rgba(15, 76, 92, 0.75);  /* azul petróleo semi-transparente */
-  font-size: 1.rem;
+  background-color: rgba(15, 76, 92, 0.75);
+  /* azul petróleo semi-transparente */
+  font-size: 1.2rem;
   font-weight: 600;
   text-align: right;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   border-radius: 50px;
   max-width: 320px;
-  backdrop-filter: blur(4px);       /* efecto vidrio esmerilado detrás del texto */
+  backdrop-filter: blur(4px);
+  /* efecto vidrio esmerilado detrás del texto */
 }
 
 /* ===== SERVICIOS ===== */
@@ -230,7 +272,7 @@ main {
   font-size: 0.95rem;
   max-width: 320px;
   text-align: center;
-}	
+}
 
 /* ===== TARJETAS DE SERVICIOS ===== */
 .tarjetas {
@@ -453,7 +495,7 @@ main {
 
 .cita-nosotros {
   position: absolute;
-  bottom:-1.5rem;
+  bottom: -1.5rem;
   left: 6rem;
   display: flex;
   align-items: flex-end;
@@ -852,4 +894,347 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 1.5rem;
   margin-top: 1rem;
+}
+
+/* =========================================================
+   RESPONSIVE - MEDIA QUERIES
+   ========================================================= */
+
+/* ===== PANTALLAS MUY GRANDES (monitores 1440px o más) ===== */
+@media (min-width: 1440px) {
+  header {
+    gap: 4rem;
+    justify-content: space-between;
+    padding: 1.2rem 6rem;
+  }
+
+  main,
+  #servicios,
+  #proceso,
+  #nosotros,
+  #proyectos,
+  #contacto,
+  footer {
+    padding-left: 6rem;
+    padding-right: 6rem;
+  }
+
+  .pasos-proceso,
+  .grid-proyectos,
+  .contenido-contacto {
+    max-width: 1300px;
+  }
+}
+
+/* ===== LAPTOPS ESTÁNDAR (hasta 1200px) ===== */
+@media (max-width: 1200px) {
+  header {
+    gap: 3rem;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .grid-proyectos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .contenido-contacto {
+    grid-template-columns: 200px 1fr 240px;
+    gap: 1.8rem;
+  }
+
+  .pasos-proceso {
+    max-width: 800px;
+  }
+
+  .paso {
+    width: 140px;
+  }
+}
+
+/* ===== TABLETS Y LAPTOPS PEQUEÑAS (hasta 992px) ===== */
+@media (max-width: 992px) {
+  header {
+    padding: 1rem 2rem;
+    position: relative;
+    /* referencia para el menú desplegable de abajo */
+  }
+
+  .hamburguesa {
+    display: block;
+    width: 28px;
+  }
+
+  .navegacion ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background-color: var(--color-bg-dark);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .navegacion ul.active {
+    max-height: 400px;
+  }
+
+  .navegacion ul li {
+    width: 100%;
+  }
+
+  .navegacion ul li a {
+    display: block;
+    text-align: center;
+    padding: 0.9rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .navegacion a#btn-asesoria {
+    border-radius: 0;
+    text-align: center;
+  }
+
+  /* ----- HERO / INICIO ----- */
+  main {
+    padding: 1.5rem 2rem;
+  }
+
+  #inicio {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .texto-inicio {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .imagen-inicio {
+    width: 100%;
+  }
+
+  .imagen-inicio img {
+    width: 100%;
+  }
+
+  /* ----- SERVICIOS ----- */
+  section.tarjetas {
+    flex-wrap: wrap;
+  }
+
+  /* ----- PROCESO: quitamos la línea conectora horizontal,
+     ya no tiene sentido cuando los pasos se apilan ----- */
+  .pasos-proceso {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    max-width: 100%;
+  }
+
+  .pasos-proceso::before {
+    display: none;
+  }
+
+  .paso {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* ----- NOSOTROS ----- */
+  #nosotros {
+    padding: 2rem;
+  }
+
+  .contenido-nosotros {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .texto-nosotros {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .nosotros-img-leyend {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .mini-tarjetas {
+    flex-wrap: wrap;
+  }
+
+  article.tarjetas {
+    flex: 1 1 45%;
+  }
+
+  /* ----- PROYECTOS ----- */
+  .grid-proyectos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ----- CONTACTO: de 3 columnas a 1 sola, apilado ----- */
+  .contenido-contacto {
+    grid-template-columns: 1fr;
+  }
+
+  .metodos-contacto {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+  }
+
+  .mapa-contacto {
+    min-height: 250px;
+  }
+
+  /* ----- FOOTER ----- */
+  footer {
+    justify-content: flex-start;
+    gap: 2.5rem;
+  }
+}
+
+/* ===== TABLETS VERTICALES Y CELULARES GRANDES (hasta 768px) ===== */
+@media (max-width: 768px) {
+  header {
+    padding: 1rem 1.5rem;
+  }
+
+  main {
+    padding: 1.5rem;
+  }
+
+  .texto-inicio h2 {
+    font-size: 1.5rem;
+  }
+
+  .botones-inicio {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .botones-inicio a {
+    text-align: center;
+  }
+
+  .imagen-inicio span {
+    position: static;
+    margin-top: 1rem;
+    max-width: 100%;
+    text-align: left;
+    display: block;
+  }
+
+  #servicios,
+  #proceso,
+  #nosotros,
+  #proyectos,
+  #contacto {
+    padding: 2.5rem 1.5rem;
+  }
+
+  section.tarjetas {
+    gap: 1.2rem;
+  }
+
+  /* ----- NOSOTROS cita flotante ----- */
+  .cita-nosotros {
+    position: static;
+    max-width: 100%;
+    margin-top: 1rem;
+  }
+
+  .nosotros-img-leyend {
+    align-items: stretch;
+  }
+
+  article.tarjetas {
+    flex: 1 1 100%;
+  }
+
+  .grid-proyectos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* ----- CONTACTO ----- */
+  .fila-form {
+    grid-template-columns: 1fr;
+  }
+
+  .metodos-contacto {
+    flex-direction: column;
+  }
+
+  /* ----- FOOTER ----- */
+  footer {
+    flex-direction: column;
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  }
+
+  .nav-footer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+/* ===== CELULARES (hasta 480px) ===== */
+@media (max-width: 480px) {
+  .Logo {
+    font-size: 2.5rem;
+  }
+
+  header h2 {
+    font-size: 1.4rem;
+  }
+
+  .texto-inicio span {
+    font-size: 0.85rem;
+  }
+
+  .texto-inicio h2 {
+    font-size: 1.3rem;
+  }
+
+  .texto-inicio p {
+    font-size: 0.9rem;
+  }
+
+  section.tarjetas {
+    flex-direction: column;
+  }
+
+  .tarjetas article {
+    width: 100%;
+  }
+
+  #proceso h2,
+  .proyectos-header h2,
+  .contacto-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .grid-proyectos {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-ver-proyectos a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .btn-enviar {
+    font-size: 1rem;
+  }
+
+  .footer-marca h2 {
+    font-size: 1.4rem;
+  }
 }
