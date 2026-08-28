@@ -34,7 +34,10 @@
 
   /* Bordes y detalles */
   --color-border: #E0E6E7;
-  /* Bordes sutiles en tarjetas */
+
+  /* Tipografía */
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 }
 
 * {
@@ -45,7 +48,12 @@
 }
 
 body {
+  font-family: var(--font-body);
   overflow: hidden;
+}
+
+h1, h2, h3, .Logo {
+  font-family: var(--font-heading);
 }
 
 /* ===== RELOAD ===== */
@@ -74,7 +82,7 @@ header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 45rem;
+  gap: 40rem;
   padding: 1rem 3rem;
   position: sticky;
   top: 0;
@@ -283,6 +291,7 @@ main {
   padding: 1rem 2rem;
 }
 
+
 .tarjetas article {
   padding: 1rem 1rem;
   border: solid 1px var(--color-border);
@@ -307,6 +316,31 @@ main {
   justify-content: center;
   width: 90px;
   height: 90px;
+}
+
+.tarjeta-creacion:hover {
+  transition: 0.2s ease;
+  transform: translateY(-1rem);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.tarjeta-admon:hover {
+  transition: 0.2s ease;
+  transform: translateY(-1rem);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.tarjeta-mejora:hover {
+  transition: 0.2s ease;
+  transform: translateY(-1rem);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.tarjeta-estrategia:hover {
+  transition: 0.2s ease;
+  transform: translateY(-1rem);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 /* ===== NUESTRO PROCESO ===== */
@@ -564,6 +598,7 @@ main {
   margin: 0 auto;
 }
 
+
 .tarjeta-proyecto {
   display: flex;
   flex-direction: column;
@@ -584,6 +619,12 @@ main {
   color: var(--color-text-inverse);
   font-size: 0.9rem;
   font-weight: 700;
+}
+
+.tarjeta-proyecto:hover {
+  transition: 0.2s ease;
+  transform: translateY(-1rem);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== BOTÓN VER MÁS PROYECTOS ===== */
@@ -1023,7 +1064,7 @@ footer {
   }
 
   /* ----- SERVICIOS ----- */
-  section.tarjetas {
+  .tarjetas {
     flex-wrap: wrap;
   }
 
