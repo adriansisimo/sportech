@@ -31,7 +31,3 @@ out/
 .vercel
 .next/
 node_modules/
-
-# Otros
-package-lock.json
-package.json
