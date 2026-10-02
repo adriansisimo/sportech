@@ -40,6 +40,14 @@
   --font-body: 'Inter', system-ui, sans-serif;
 }
 
+html {
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   margin: 0;
   padding: 0;
