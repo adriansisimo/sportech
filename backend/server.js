@@ -16,12 +16,12 @@ const data = {
 
 // Rutas
 // GET
-app.get('api/data', (req, res) => {
+app.get('/api/data', (req, res) => {
     res.json(data);
 });
 
 // GET por ID
-app.get('api/data/:id', (req, res) => {
+app.get('/api/data/:id', (req, res) => {
     const { id } = req.params;
     res.json(data);
 });
