@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/adriansisimo/sportech#readme",
   "dependencies": {
+    "dotenv": "^18.0.6",
     "express": "^5.2.1"
   }
 }
