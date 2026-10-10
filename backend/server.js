@@ -1,7 +1,8 @@
+const dotenv = require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -10,14 +11,19 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // Conectar a la base de datos
-const MONGODB_URI = 'mongodb+srv://adrian033109aa_db_user:YihVoGcbzafgsZ66@sportechadrian.jvn9ekh.mongodb.net/sportech'
+const MONGODB_URI = process.env.MONGODB_URI;
 const conectarDB = async () => {
+    if (!MONGODB_URI) {
+        console.error('Falta la variable MONGODB_URI en el archivo .env');
+        process.exit(1);
+    }
+
     try {
         await mongoose.connect(MONGODB_URI);
         console.log('Conectado a la base de datos');
     } catch (error) {
         console.error('Error al conectar a la base de datos:', error.message);
-        process.exit(1); // Salir del proceso con un código de error
+        process.exit(1);
     }
 };
 
