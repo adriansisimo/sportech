@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
 
@@ -8,42 +9,61 @@ app.use(express.json());
 // Conectar fronten con el backend
 app.use(express.static('public'));
 
-let data = [
-    {
-        id: 1,
-        nombre: 'Adrian'
+// Conectar a la base de datos
+const MONGODB_URI = 'mongodb+srv://adrian033109aa_db_user:YihVoGcbzafgsZ66@sportechadrian.jvn9ekh.mongodb.net/sportech'
+const conectarDB = async () => {
+    try {
+        await mongoose.connect(MONGODB_URI);
+        console.log('Conectado a la base de datos');
+    } catch (error) {
+        console.error('Error al conectar a la base de datos:', error.message);
+        process.exit(1); // Salir del proceso con un código de error
     }
-];
+};
+
+conectarDB();
+
+const Cliente = require("../modelos/clientes");
 
 // Rutas
 // GET
-app.get('/api/data', (req, res) => {
-    res.json(data);
+app.get('/user/cliente', async (req, res) => {
+    try {
+            const clientes = await Cliente.find();
+    res.status(200).json(clientes);
+    } catch (error) {
+        console.error('Error al obtener clientes:', error.message);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 });
 
 // GET por ID
-app.get('/api/data/:id', (req, res) => {
+app.get('/user/cliente/:id', async (req, res) => {
     const { id } = req.params;
-    const cliente = data.find(c => c.id === parseInt(id));
-    if (!cliente) {
+    const clientes = await Cliente.findById(id);
+    if (!clientes) {
         return res.status(404).json({ error: 'Cliente no encontrado' });
     }
-    res.status(200).json(cliente);
+    res.status(200).json(clientes);
 });
 
 // POST 
-app.post('/api/data', (req, res) => {
-    const { nombre } = req.body;
+app.post('/user/cliente', async (req, res) => {
+    const nombre = req.body.nombre;
+    const correo = req.body.correo;
+    const telefono = req.body.telefono;
+    const mensaje = req.body.mensaje;
     const cliente = {
         nombre: nombre,
-    };
-    const clienteNuevo = {
-        id: data.length + 1,
-        nombre: nombre.trim()
-    };
+        correo: correo,
+        telefono: telefono,
+        mensaje: mensaje
+    }
 
-    data.push(clienteNuevo);
-    res.status(201).json(clienteNuevo);
+    const nuevoCliente = new Cliente(cliente);
+    const clienteGuardado = await nuevoCliente.save();
+
+    res.status(201).json(clienteGuardado);
 });
 
 
