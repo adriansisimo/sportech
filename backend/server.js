@@ -72,6 +72,44 @@ app.post("/user/cliente", async (req, res) => {
   res.status(201).json(clienteGuardado);
 });
 
+// PUT
+app.put("/user/cliente/:id", async (req, res) => {
+  const id = req.params.id;
+  const nombre = req.body.nombre;
+  const correo = req.body.correo;
+  const telefono = req.body.telefono;
+  const mensaje = req.body.mensaje;
+
+  const cliente = {
+    nombre: nombre,
+    correo: correo,
+    telefono: telefono,
+    mensaje: mensaje
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "ID de cliente inválido" });
+  }
+
+  const clienteActualizado = await Cliente.findByIdAndUpdate(id, cliente, { new: true} );
+  res.status(200).json(clienteActualizado);
+})
+
+// DELETE
+app.delete("/user/cliente/:id", async (req, res) => {
+  const id = req.params.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: "ID de cliente inválido" });
+  }
+
+  const clienteEliminado = await Cliente.findByIdAndDelete(id);
+  if (!clienteEliminado) {
+    return res.status(404).json({ error: "Cliente no encontrado" });
+  }
+  res.status(200).json("Cliente eliminado correctamente");
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
