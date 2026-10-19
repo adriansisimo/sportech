@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingresar | SporTech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./paginas.css">
+  <script src="assets/javascript/acceso.js" defer></script>
+</head>
+<body class="pagina-interna">
+  <header class="barra-interna">
+    <a class="logo-link" href="index.html">Spor<span class="titulo-tech">Tech</span></a>
+    <a class="enlace-barra" href="index.html">← Volver al inicio</a>
+  </header>
+
+  <main>
+    <div class="tarjeta-acceso">
+      <div class="tabs">
+        <button type="button" class="tab active" data-form="formLogin">Ingresar</button>
+        <button type="button" class="tab" data-form="formRegistro">Crear cuenta</button>
+      </div>
+
+      <form id="formLogin" class="form-acceso">
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <button type="submit" class="btn-primario">Ingresar</button>
+      </form>
+
+      <form id="formRegistro" class="form-acceso" hidden>
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="password" name="password" placeholder="Contraseña (mín. 6 caracteres)" minlength="6" required>
+        <select name="servicio" required>
+          <option value="" disabled selected>¿Qué servicio necesitas?</option>
+          <option value="creacion-web">Creación de Páginas Web</option>
+          <option value="administracion-web">Administración Web</option>
+          <option value="mejora-web">Mejora de Páginas Existentes</option>
+          <option value="estrategia-conexion">Estrategia y Conexión</option>
+        </select>
+        <button type="submit" class="btn-primario">Crear cuenta</button>
+      </form>
+
+      <p id="mensajeAcceso" class="mensaje" hidden></p>
+    </div>
+  </main>
+</body>
+</html>
