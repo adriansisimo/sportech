@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const auth = require('../middleware/auth');
 const { Cliente, SERVICIOS } = require('../../modelos/clientes');
+const { cerrarSesion } = require('../utils/sesion');
 
 router.use(auth); // TODAS las rutas de este archivo exigen token
 
@@ -18,6 +19,12 @@ router.put('/me', async (req, res) => {
 
   if (nombre) cambios.nombre = nombre.trim();
   if (servicio) {
+        const actual = await Cliente.findById(req.clienteId).select('estado');
+    if (actual.estado !== 'pendiente') {
+      return res.status(409).json({
+        error: 'Tu servicio ya está en marcha. Escríbenos por WhatsApp para cambiarlo.'
+      });
+    }
     if (!SERVICIOS.includes(servicio)) {
       return res.status(400).json({ error: 'Servicio no válido' });
     }
@@ -33,7 +40,8 @@ router.put('/me', async (req, res) => {
 // DELETE /api/clientes/me → eliminar la cuenta
 router.delete('/me', async (req, res) => {
   await Cliente.findByIdAndDelete(req.clienteId);
-  res.status(204).end(); // 204 = "listo, sin nada que devolver"
+  cerrarSesion(res);
+  res.status(204).end();
 });
 
 module.exports = router;
