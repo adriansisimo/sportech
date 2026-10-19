@@ -3,32 +3,33 @@ const formLogin = document.getElementById('formLogin');
 const formRegistro = document.getElementById('formRegistro');
 const mensaje = document.getElementById('mensajeAcceso');
 
-// Si ya hay sesión, no tiene sentido mostrar el login
-if (localStorage.getItem('token')) {
-  window.location.replace('panel.html');
-}
+// Si ya hay sesión, directo al panel
+fetch('/api/auth/sesion')
+  .then((res) => res.json())
+  .then(({ autenticado }) => {
+    if (autenticado) window.location.replace('panel.html');
+  })
+  .catch(() => {});
 
 function mostrarMensaje(texto, tipo) {
-  mensaje.textContent = texto;          // textContent (no innerHTML) = seguro contra inyección
+  mensaje.textContent = texto;
   mensaje.className = `mensaje ${tipo}`;
   mensaje.hidden = false;
 }
 
-// Alternar entre las pestañas
 tabs.forEach((tab) => {
   tab.addEventListener('click', () => {
-    tabs.forEach((t) => t.classList.remove('active'));
-    tab.classList.add('active');
-    formLogin.hidden = tab.dataset.form !== 'formLogin';
-    formRegistro.hidden = tab.dataset.form !== 'formRegistro';
+    tabs.forEach((t) => t.classList.toggle('active', t === tab));
+    formLogin.classList.toggle('activo', tab.dataset.form === 'formLogin');
+    formRegistro.classList.toggle('activo', tab.dataset.form === 'formRegistro');
     mensaje.hidden = true;
   });
 });
 
-// Función reutilizable: manda un POST con JSON y devuelve la respuesta
 async function enviar(url, datos) {
   const res = await fetch(url, {
     method: 'POST',
+    credentials: 'same-origin',          // envía/recibe cookies del mismo sitio
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(datos)
   });
@@ -37,14 +38,12 @@ async function enviar(url, datos) {
   return json;
 }
 
-// Un solo manejador para ambos formularios
 function manejar(form, url) {
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();                                   // evita que la página recargue
-    const datos = Object.fromEntries(new FormData(form)); // {email:'..', password:'..'}
+    e.preventDefault();
+    const datos = Object.fromEntries(new FormData(form));
     try {
-      const { token } = await enviar(url, datos);
-      localStorage.setItem('token', token);
+      await enviar(url, datos);          // el servidor deja la cookie; no hay nada que guardar aquí
       window.location.href = 'panel.html';
     } catch (err) {
       mostrarMensaje(err.message, 'error');
