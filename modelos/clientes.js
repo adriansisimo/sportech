@@ -1,24 +1,28 @@
-const mongoose = require("mongoose");
-const clienteSchema = mongoose.Schema({
-  nombre: {
-    type: String,
-    trim: true,
-    required: true
-  },
-  correo: {
-    type: String,
-    trim: true,
-    lowercase: true,
-    required: true
-  },
-  telefono: {
-    type: String,
-    trim: true
-  },
-  mensaje: {
-    type: String,
-    trim: true
-  },
-});
+const mongoose = require('mongoose');
 
-module.exports = mongoose.model("Clientes", clienteSchema);
+// Lista oficial de servicios. Coincide con las 4 tarjetas de tu página.
+const SERVICIOS = [
+  'creacion-web',
+  'administracion-web',
+  'mejora-web',
+  'estrategia-conexion'
+];
+
+const clienteSchema = new mongoose.Schema(
+  {
+    nombre: { type: String, required: true, trim: true },
+    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    password: { type: String, required: true, select: false },
+    servicio: { type: String, enum: SERVICIOS, required: true },
+    estado: {
+      type: String,
+      enum: ['pendiente', 'en-proceso', 'activo', 'finalizado'],
+      default: 'pendiente'
+    }
+  },
+  { timestamps: true }
+);
+
+const Cliente = mongoose.model('Cliente', clienteSchema);
+
+module.exports = { Cliente, SERVICIOS };
