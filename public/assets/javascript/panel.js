@@ -1,9 +1,5 @@
-const token = localStorage.getItem('token');
-if (!token) window.location.replace('acceso.html');
-
 const contenedor = document.getElementById('contenido-panel');
 
-// Diccionarios: traducen el valor "feo" de la BD a texto bonito
 const NOMBRES_SERVICIO = {
   'creacion-web': 'Creación de Páginas Web',
   'administracion-web': 'Administración Web',
@@ -17,47 +13,98 @@ const NOMBRES_ESTADO = {
   'finalizado': 'Finalizado'
 };
 
-// Evita que un nombre como <script>... se ejecute al pintarlo con innerHTML
+// Los 5 pasos del proceso (mismos textos de "Así trabajamos contigo" en el index)
+const PASOS = [
+  { titulo: 'Analizamos', descripcion: 'Entendemos tu club o iniciativa y tus objetivos.' },
+  { titulo: 'Diseñamos', descripcion: 'Creamos una propuesta personalizada alineada a tu identidad.' },
+  { titulo: 'Desarrollamos', descripcion: 'Construimos tu sitio web con tecnología de alto rendimiento.' },
+  { titulo: 'Lanzamos', descripcion: 'Publicamos tu página y la dejamos lista para destacar.' },
+  { titulo: 'Administramos', descripcion: 'Mantenemos y optimizamos tu sitio para que siempre esté al 100%.' }
+];
+
+// Devuelve 'completado', 'actual' o 'pendiente' para un paso (1 a 5)
+function estadoPaso(numero, c) {
+  if (c.estado === 'finalizado') return 'completado';
+  if (c.estado === 'pendiente') return 'pendiente';
+  if (numero < c.etapa) return 'completado';
+  if (numero === c.etapa) return 'actual';
+  return 'pendiente';
+}
+
+// Frase corta que acompaña al título de la tarjeta
+function mensajeProgreso(c) {
+  if (c.estado === 'finalizado') return '¡Tu proyecto está finalizado! 🎉';
+  if (c.estado === 'pendiente') return 'Recibimos tu solicitud. Pronto empezamos con el análisis.';
+  return `Etapa ${c.etapa} de 5: ${PASOS[c.etapa - 1].titulo}`;
+}
+
+// Convierte el array PASOS en el HTML de la tarjeta
+function pintarProgreso(c) {
+  const pasos = PASOS.map((paso, i) => {
+    const numero = i + 1;
+    const estado = estadoPaso(numero, c);
+
+    return `
+      <li class="paso-progreso ${estado}" ${estado === 'actual' ? 'aria-current="step"' : ''}>
+        <span class="marca-progreso">${estado === 'completado' ? '✓' : numero}</span>
+        <div class="texto-progreso">
+          <h4>${paso.titulo}</h4>
+          <p>${paso.descripcion}</p>
+        </div>
+      </li>`;
+  }).join('');
+
+  return `
+    <article class="tarjeta-panel tarjeta-progreso">
+      <div class="cabecera-progreso">
+        <h3>Progreso de tu proyecto</h3>
+        <span class="resumen-progreso">${mensajeProgreso(c)}</span>
+      </div>
+      <ol class="lista-progreso">${pasos}</ol>
+    </article>`;
+}
+
 const escapar = (texto) =>
   texto.replace(/[&<>"']/g, (c) => (
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
   ));
 
-function cerrarSesion() {
-  localStorage.removeItem('token');
-  window.location.href = 'index.html';
+async function cerrarSesion() {
+  try {
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
+  } finally {
+    window.location.href = 'index.html';
+  }
 }
 document.getElementById('btnSalir').addEventListener('click', cerrarSesion);
 
-// Función central: hace el fetch y agrega el token automáticamente
+// Función central de peticiones: la cookie viaja sola, no hay que añadir nada
 async function api(url, opciones = {}) {
   const res = await fetch(url, {
     ...opciones,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    }
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json' }
   });
 
-  if (res.status === 401) {          // token vencido o falso
-    cerrarSesion();
+  if (res.status === 401) {                 // sin sesión o sesión vencida
+    window.location.replace('acceso.html');
     throw new Error('Sesión expirada');
   }
-  if (res.status === 204) return null; // DELETE no devuelve cuerpo
+  if (res.status === 204) return null;
 
   const json = await res.json();
   if (!res.ok) throw new Error(json.error || 'Error');
   return json;
 }
 
-// Convierte el servicio actual en <option>s: aquí está la magia de "array → HTML"
+// Genera el HTML del desplegable personalizado
 const opcionesServicio = (actual) =>
   Object.entries(NOMBRES_SERVICIO)
-    .map(([valor, nombre]) =>
-      `<option value="${valor}" ${valor === actual ? 'selected' : ''}>${nombre}</option>`)
+    .map(([valor, nombre]) => `
+      <li class="select-opcion" role="option" data-valor="${valor}"
+          aria-selected="${valor === actual}">${nombre}</li>`)
     .join('');
 
-// PINTAR: recibe el objeto del cliente y lo convierte en HTML
 function pintarPanel(c) {
   const mensajeWA = encodeURIComponent(
     `Hola SporTech, soy ${c.nombre} y quiero hablar sobre mi servicio: ${NOMBRES_SERVICIO[c.servicio]}`
@@ -68,6 +115,7 @@ function pintarPanel(c) {
 
   contenedor.innerHTML = `
     <h1>Hola, ${escapar(c.nombre)} 👋</h1>
+    ${pintarProgreso(c)}
 
     <div class="grid-panel">
       <article class="tarjeta-panel">
@@ -84,12 +132,25 @@ function pintarPanel(c) {
 
       <article class="tarjeta-panel acciones">
         <h3>Acciones</h3>
-        <a class="btn-primario" target="_blank" rel="noopener noreferrer"
+                <a class="btn-primario" target="_blank" rel="noopener noreferrer"
            href="https://wa.me/573235176563?text=${mensajeWA}">Escribir por WhatsApp</a>
 
-        <form id="formServicio" class="form-inline">
-          <select name="servicio">${opcionesServicio(c.servicio)}</select>
-          <button type="submit" class="btn-secundario">Guardar</button>
+        ${c.rol === 'admin' ? '<a class="btn-secundario" href="admin.html">Administrar clientes</a>' : ''}
+
+        <form id="formServicio" class="form-servicio">
+          <div class="select-custom" id="selectServicio">
+            <input type="hidden" name="servicio" value="${c.servicio}">
+            <button type="button" class="select-boton" aria-haspopup="listbox" aria-expanded="false">
+              <span class="select-valor">${NOMBRES_SERVICIO[c.servicio]}</span>
+              <svg class="select-flecha" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <ul class="select-lista" role="listbox">
+              ${opcionesServicio(c.servicio)}
+            </ul>
+          </div>
+          <button type="submit" class="btn-secundario" disabled>Guardar</button>
         </form>
 
         <button id="btnEliminar" class="btn-peligro">Eliminar cuenta</button>
@@ -97,16 +158,24 @@ function pintarPanel(c) {
     </div>
   `;
 
-  // Como innerHTML recrea los elementos, los listeners se agregan DESPUÉS de pintar
-  document.getElementById('formServicio').addEventListener('submit', async (e) => {
+  // Los listeners se agregan DESPUÉS de pintar, porque innerHTML recrea los elementos
+  const formServicio = document.getElementById('formServicio');
+  const btnGuardar = formServicio.querySelector('button[type="submit"]');
+
+  // "Guardar" solo se habilita si el servicio elegido es distinto al actual
+  activarSelect(document.getElementById('selectServicio'), (valor) => {
+    btnGuardar.disabled = valor === c.servicio;
+  });
+
+  formServicio.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const servicio = new FormData(e.target).get('servicio');
+    const servicio = new FormData(formServicio).get('servicio');
     try {
       const actualizado = await api('/api/clientes/me', {
         method: 'PUT',
         body: JSON.stringify({ servicio })
       });
-      pintarPanel(actualizado); // volvemos a pintar con los datos nuevos
+      pintarPanel(actualizado);
     } catch (err) {
       alert(err.message);
     }
@@ -116,14 +185,13 @@ function pintarPanel(c) {
     if (!confirm('¿Seguro que quieres eliminar tu cuenta? No se puede deshacer.')) return;
     try {
       await api('/api/clientes/me', { method: 'DELETE' });
-      cerrarSesion();
+      window.location.href = 'index.html';   // el servidor ya borró la cookie
     } catch (err) {
       alert(err.message);
     }
   });
 }
 
-// ARRANQUE: pedir datos (GET) y pintarlos
 async function cargarPanel() {
   try {
     const cliente = await api('/api/clientes/me');
