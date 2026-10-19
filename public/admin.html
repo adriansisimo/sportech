@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración | SporTech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./paginas.css">
+  <link rel="stylesheet" href="./cookies.css">
+  <script src="assets/javascript/cookies-banner.js" defer></script>
+  <script src="assets/javascript/admin.js" defer></script>
+</head>
+<body class="pagina-interna">
+  <header class="barra-interna">
+    <a class="logo-link" href="index.html">Spor<span class="titulo-tech">Tech</span></a>
+    <nav class="acciones-barra">
+      <a class="enlace-barra" href="panel.html">Mi panel</a>
+      <button id="btnSalir" class="btn-salir">Cerrar sesión</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="contenedor-admin">
+      <h1>Administración de clientes</h1>
+
+      <!-- Tarjetas con números: las rellena el JS -->
+      <section id="resumen" class="grid-resumen"></section>
+
+      <div class="barra-filtros">
+        <input type="search" id="busqueda" placeholder="Buscar por nombre o correo...">
+        <select id="filtroEstado"></select>
+      </div>
+
+      <div class="tabla-contenedor">
+        <table class="tabla-clientes">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Servicio</th>
+              <th>Estado</th>
+              <th>Etapa</th>
+              <th>Registro</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbodyClientes">
+            <tr><td colspan="6" class="tabla-vacia">Cargando clientes...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p id="aviso" class="mensaje toast" hidden></p>
+  </main>
+</body>
+</html>
