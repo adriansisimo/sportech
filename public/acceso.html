@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./paginas.css">
   <script src="assets/javascript/acceso.js" defer></script>
+  <link rel="stylesheet" href="./cookies.css">
+  <script src="assets/javascript/cookies-banner.js" defer></script>
 </head>
 <body class="pagina-interna">
   <header class="barra-interna">
@@ -24,13 +26,13 @@
         <button type="button" class="tab" data-form="formRegistro">Crear cuenta</button>
       </div>
 
-      <form id="formLogin" class="form-acceso">
+      <form id="formLogin" class="form-acceso activo">
         <input type="email" name="email" placeholder="Correo electrónico" required>
         <input type="password" name="password" placeholder="Contraseña" required>
         <button type="submit" class="btn-primario">Ingresar</button>
       </form>
 
-      <form id="formRegistro" class="form-acceso" hidden>
+      <form id="formRegistro" class="form-acceso">
         <input type="text" name="nombre" placeholder="Nombre completo" required>
         <input type="email" name="email" placeholder="Correo electrónico" required>
         <input type="password" name="password" placeholder="Contraseña (mín. 6 caracteres)" minlength="6" required>
