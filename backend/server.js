@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use('/api/admin', require('./routes/admin'));
 
 app.use('/api', verificarOrigen);
+app.use('/api/admin', require('./routes/admin'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/clientes', require('./routes/clientes'));
 
@@ -32,4 +33,7 @@ mongoose
     console.log('Conectado a MongoDB');
     app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
   })
-  .catch((err) => console.error('Error conectando a MongoDB:', err));
+  .catch((err) => {
+    console.error('Error conectando a MongoDB:', err);
+    process.exit(1);
+  });

@@ -4,8 +4,7 @@ const formRegistro = document.getElementById('formRegistro');
 const mensaje = document.getElementById('mensajeAcceso');
 
 // Si ya hay sesión, directo al panel
-fetch('/api/auth/sesion')
-  .then((res) => res.json())
+peticion('/api/auth/sesion')
   .then(({ autenticado }) => {
     if (autenticado) window.location.replace('panel.html');
   })
@@ -26,17 +25,8 @@ tabs.forEach((tab) => {
   });
 });
 
-async function enviar(url, datos) {
-  const res = await fetch(url, {
-    method: 'POST',
-    credentials: 'same-origin',          // envía/recibe cookies del mismo sitio
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(datos)
-  });
-  const json = await res.json();
-  if (!res.ok) throw new Error(json.error || 'Algo salió mal');
-  return json;
-}
+const enviar = (url, datos) =>
+  peticion(url, { method: 'POST', body: JSON.stringify(datos) });
 
 function manejar(form, url) {
   form.addEventListener('submit', async (e) => {
