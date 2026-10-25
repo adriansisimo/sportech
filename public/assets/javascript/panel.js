@@ -1,18 +1,5 @@
 const contenedor = document.getElementById('contenido-panel');
 
-const NOMBRES_SERVICIO = {
-  'creacion-web': 'Creación de Páginas Web',
-  'administracion-web': 'Administración Web',
-  'mejora-web': 'Mejora de Páginas Existentes',
-  'estrategia-conexion': 'Estrategia y Conexión'
-};
-const NOMBRES_ESTADO = {
-  'pendiente': 'Pendiente',
-  'en-proceso': 'En proceso',
-  'activo': 'Activo',
-  'finalizado': 'Finalizado'
-};
-
 // Los 5 pasos del proceso (mismos textos de "Así trabajamos contigo" en el index)
 const PASOS = [
   { titulo: 'Analizamos', descripcion: 'Entendemos tu club o iniciativa y tus objetivos.' },
@@ -64,39 +51,6 @@ function pintarProgreso(c) {
     </article>`;
 }
 
-const escapar = (texto) =>
-  texto.replace(/[&<>"']/g, (c) => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-  ));
-
-async function cerrarSesion() {
-  try {
-    await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
-  } finally {
-    window.location.href = 'index.html';
-  }
-}
-document.getElementById('btnSalir').addEventListener('click', cerrarSesion);
-
-// Función central de peticiones: la cookie viaja sola, no hay que añadir nada
-async function api(url, opciones = {}) {
-  const res = await fetch(url, {
-    ...opciones,
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json' }
-  });
-
-  if (res.status === 401) {                 // sin sesión o sesión vencida
-    window.location.replace('acceso.html');
-    throw new Error('Sesión expirada');
-  }
-  if (res.status === 204) return null;
-
-  const json = await res.json();
-  if (!res.ok) throw new Error(json.error || 'Error');
-  return json;
-}
-
 // Genera el HTML del desplegable personalizado
 const opcionesServicio = (actual) =>
   Object.entries(NOMBRES_SERVICIO)
@@ -109,9 +63,7 @@ function pintarPanel(c) {
   const mensajeWA = encodeURIComponent(
     `Hola SporTech, soy ${c.nombre} y quiero hablar sobre mi servicio: ${NOMBRES_SERVICIO[c.servicio]}`
   );
-  const desde = new Date(c.createdAt).toLocaleDateString('es-CO', {
-    day: 'numeric', month: 'long', year: 'numeric'
-  });
+  const desde = formatearFecha(c.createdAt, 'long');
 
   contenedor.innerHTML = `
     <h1>Hola, ${escapar(c.nombre)} 👋</h1>
