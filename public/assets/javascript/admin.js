@@ -10,18 +10,6 @@ const aviso = document.getElementById('aviso');
 let clientes = [];
 let miId = null; // mi propio id, para no mostrarme el botón de eliminar
 
-const NOMBRES_SERVICIO = {
-  'creacion-web': 'Creación de Páginas Web',
-  'administracion-web': 'Administración Web',
-  'mejora-web': 'Mejora de Páginas Existentes',
-  'estrategia-conexion': 'Estrategia y Conexión'
-};
-const NOMBRES_ESTADO = {
-  'pendiente': 'Pendiente',
-  'en-proceso': 'En proceso',
-  'activo': 'Activo',
-  'finalizado': 'Finalizado'
-};
 const NOMBRES_ETAPA = {
   1: '1. Analizamos',
   2: '2. Diseñamos',
@@ -31,10 +19,6 @@ const NOMBRES_ETAPA = {
 };
 
 // ===== UTILIDADES =====
-const escapar = (texto) =>
-  texto.replace(/[&<>"']/g, (c) => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-  ));
 
 // Convierte un diccionario en <option>s. "actual" es el valor que queda seleccionado.
 const opciones = (diccionario, actual) =>
@@ -50,37 +34,6 @@ function avisar(texto, tipo) {
   aviso.hidden = false;
   clearTimeout(temporizadorAviso);                       // si había uno pendiente, lo cancelamos
   temporizadorAviso = setTimeout(() => { aviso.hidden = true; }, 3000);
-}
-
-async function cerrarSesion() {
-  try {
-    await fetch('/api/auth/logout', { method: 'POST', credentials: 'same-origin' });
-  } finally {
-    window.location.href = 'index.html';
-  }
-}
-document.getElementById('btnSalir').addEventListener('click', cerrarSesion);
-
-async function api(url, opciones = {}) {
-  const res = await fetch(url, {
-    ...opciones,
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json' }
-  });
-
-  if (res.status === 401) {                    // sin sesión
-    window.location.replace('acceso.html');
-    throw new Error('Sesión expirada');
-  }
-  if (res.status === 403) {                    // con sesión, pero no es admin
-    window.location.replace('panel.html');
-    throw new Error('Acceso restringido');
-  }
-  if (res.status === 204) return null;
-
-  const json = await res.json();
-  if (!res.ok) throw new Error(json.error || 'Error');
-  return json;
 }
 
 // ===== PINTAR =====
@@ -129,9 +82,7 @@ function pintarTabla() {
   tbody.innerHTML = lista
     .map((c) => {
       const esYo = c._id === miId;
-      const fecha = new Date(c.createdAt).toLocaleDateString('es-CO', {
-        day: 'numeric', month: 'short', year: 'numeric'
-      });
+      const fecha = formatearFecha(c.createdAt);
 
       return `
         <tr data-id="${c._id}">
